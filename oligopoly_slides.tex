@@ -18,7 +18,7 @@
 % THEOREM ENVIRONMENTS
 % =====================================================================
 \theoremstyle{plain}
-\newtheorem*{thm*}{Theorem}
+\newtheorem*{theorem*}{Theorem}
 
 % =====================================================================
 % TABLES & LAYOUT UTILITIES
@@ -93,7 +93,7 @@
   \begin{itemize}
     \item Product market competition shapes incentives for R\&D
           \medskip{}
-    \item Two key externalities of innovation:
+    \item Two key inter-firm externalities of innovation:
           \begin{itemize}
             \item[--] Business stealing effect
             \item[+] Technology spillover effect
@@ -131,9 +131,6 @@
     \item Product market rivalry: business descriptions \citep{Hoberg2016-jm, Pellegrino2024-dn}
           \medskip{}
     \item Technology spillovers: patent classification \citep{Jaffe1986-yz, Bloom2013-pn}
-
-          \medskip{}
-          \hyperlink{proximity_example}{\beamerbutton{Proximity: Example}}
           \medskip{}
   \end{itemize}
 
@@ -149,14 +146,21 @@
                                              \end{tabular} &
     \begin{tabular}{@{}c@{}}
       \textbf{Optimal Uniform} \\
-      \textbf{R\&D Subsidy (32\%)}
+      \textbf{R\&D Subsidy (34\%)}
     \end{tabular}                                                 \\
     \midrule
-    R\&D Share      & 3.6\%                & 8.0\%                    & 8.6\%   \\
-    Growth Rate     & 1.61\%               & 2.03\%                   & 2.07\%  \\
-    CE Welfare Gain & ---                  & +1.29\%                  & +1.17\% \\
+    R\&D Share      & 2.60\%                & 6.27\%                    & 6.17\%   \\
+    CE Welfare Gain & ---                  & +4.36\%                  & +0.53\% \\
     \bottomrule
   \end{tabular}
+  \medskip{}
+  \begin{itemize}
+    \item R\&D subsidies should take the network structure into account and target firms with 
+    \begin{itemize}
+      \item low product-market centrality
+      \item high technology-spillover centrality
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Literature}
@@ -176,25 +180,26 @@
 \section{Model}
 \begin{frame}{Demand and Production Technology}
 
-  \begin{itemize}
-    \item Firm $i\in \left\{1,\ldots, n\right\}$ \medskip{}\pause
-    \item Final good linear quadratic aggregator \citep{Pellegrino2024-dn}:
-          \[Y_{t}=\bm{q}_{t}^{T}\bm{b}_{t}-\frac{1}{2}\bm{q}_{t}^{T}\bm{\Sigma}\bm{q}_{t}\]\vspace{-1em}
+  \label{static_game}
+\begin{itemize}
+    \item Firm $i\in \left\{1,\ldots,n\right\}$ has knowledge capital $z_{i,t}$ and produces a single differentiated product
+          \medskip{}\pause
+    \item Linear inverse demand \citep{Pellegrino2024-dn}: \[p_{i,t}=b_{i,t}-\sum_{j\neq i}\sigma_{ij}q_{j,t} - q_{i,t}\]
           \begin{itemize}
-            \item $\bm{\Sigma}=\left[\sigma_{ij}\right]$: product market rivalry matrix (network)
-            \item Linear inverse demand: $p_{i,t}=b_{i,t}-\sum_{j\neq i}\sigma_{ij}q_{j,t} - q_{i,t}$
-          \end{itemize}\medskip{}\pause
-    \item CRS intermediate good production technology: \[q_{i,t}=a_{i,t}l_{i,t}\]\vspace{-1em}\pause
-    \item Each firm has knowledge capital (state variable): $z_{i,t}$ \medskip{}\pause
-    \item Each firm allocates knowledge capital to improve labor productivity
-          and product quality:
-          \[\zeta a_{i,t}+b_{i,t}=z_{i,t}\]
+            \item $\bm{\Sigma}=\left[\sigma_{ij}\right]$: product-market rivalry matrix (network) $\quad (\sigma_{ii} = 1)$
+          \end{itemize}
+          \medskip{}\pause
+    \item CRS production technology: \[q_{i,t}=a_{i,t}l_{i,t}\]\pause
+    \item Each firm allocates knowledge capital to improve labor productivity and product quality:
+          \[
+            \zeta a_{i,t}+b_{i,t}=z_{i,t}
+          \]
   \end{itemize}
 \end{frame}
 %
 \begin{frame}{Law of Motion of Knowledge Capital}
   \[
-    \dot{\bm{z}}_{t}=\underbrace{\bm{\Omega}\bm{z}_{t}}_{\text{Tech Spillover}}+\underbrace{\mu\bm{x}_{t}}_{\text{R\&D}}
+    \dot{\bm{z}}_{t}=\underbrace{\bm{\Omega}\bm{z}_{t}}_{\text{Tech Spillover}}+\underbrace{\mu\bm{x}_{t}}_{\text{R\&D}}-\underbrace{\delta\bm{z}_{t}}_{\text{Depreciation}}
   \]
   \begin{itemize}
     \item $\bm{\Omega}=\left[\omega_{ij}\right]$: technology spillover matrix (network)\medskip{}
@@ -203,9 +208,9 @@
             \item $d_{i,t}$: R\&D input in terms of final good
             \item Innovation elasticity is 0.5\medskip{}
           \end{itemize}
-    \item $\mu$: positive scalar
+    \item $\mu$, $\delta$: positive scalars
           \medskip{}
-    \item Can incorporate shocks (not today)
+    \item Can incorporate idiosyncratic \& aggregate shocks (not today)
   \end{itemize}
 \end{frame}
 %
@@ -213,19 +218,23 @@
   \begin{itemize}
     \item Inelastic labor supply:
           \[
-            \sum_{i}l_{i,t}=L
+            L=\sum_{i}l_{i,t}
+          \]
+    \item Linear-quadratic aggregator:
+          \[
+            Y_{t}=\bm{q}_{t}^{T}\bm{b}_{t}-\frac{1}{2}\bm{q}_{t}^{T}\bm{\Sigma}\bm{q}_{t}
           \]
     \item Final good market clearing:
           \[
             C_{t}+\underbrace{\sum_{i}d_{i,t}}_{\text{R\&D input}}=Y_{t}
           \]
-    \item Risk neutral representative household:
+    \item Risk-neutral representative household:
           \[
-            U_t =\int_{t}^{\infty}\exp\left(-\rho s\right)C_{s}ds
+            U_t = \int_{t}^{\infty}\exp\left(-\rho s\right)C_{s}ds
           \]
   \end{itemize}
 \end{frame}
-
+%
 \section{Equilibrium}
 
 \begin{frame}{Static Cournot-Nash Equilibrium}
@@ -284,7 +293,7 @@
       \toprule
       Oligopolistic Schumpeterian & Computation time & \# of firms   & Productivity space \\
       \midrule
-      \citet{Cavenaile2023-lo}    & $O(2^n)$         & 4             & 6 grid             \\
+      \citet{Cavenaile2023-lo}    & $O(2^n)$         & 4             & 6 grids            \\
       Our model                   & $O(n^4)$         & $\approx$1000 & Continuous         \\
       \bottomrule
     \end{tabular}
@@ -295,53 +304,30 @@
 \begin{frame}{BGP}
   \begin{itemize}
     \label{bgp}
-    \item Linear R\&D strategy: $\bm{x}_{t}=\mu\bm{\widetilde{X}}\bm{z}_{t}$ where $\bm{\widetilde{X}}= \left[\bm{X}_{1}^{1} \ \cdots \ \bm{X}_{n}^{n}\right]^{T}$ and $\bm{X}_{i}^{i}$ is the $i$ th column of $\bm{X}^{i}$
+    \item Linear R\&D strategy: $\bm{x}_{t}=\mu\bm{\widetilde{X}}\bm{z}_{t}$ where $\bm{\widetilde{X}}= \left[\bm{X}_{1}^{1} \ \cdots \ \bm{X}_{n}^{n}\right]^{T}$ and $\bm{X}_{i}^{i}$ is the $i$th column of $\bm{X}^{i}$
     \item The law of motion is rewritten as $\dot{\bm{z}}_{t}=\alert{\bm{\Phi}}\bm{z}_{t}$
           where
           \[
-            \alert{\bm{\Phi}}\equiv\underbrace{\bm{\Omega}}_{\text{Tech Spillover}}+\underbrace{\mu^{2}\bm{\widetilde{X}}}_{\text{R\&D}}
+            \alert{\bm{\Phi}}\equiv\underbrace{\bm{\Omega}}_{\text{Tech Spillover}}+\underbrace{\mu^{2}\bm{\widetilde{X}}}_{\text{R\&D}} -\underbrace{\delta\bm{I}}_{\text{Depreciation}}
           \]
           \vspace{-7mm}
   \end{itemize}\pause
-  \begin{thm*}
+  \begin{theorem*}
     If \alert{$\bm{\Phi}$} is irreducible, then:
 
-    (i) There exists largest positive eigenvalue of \alert{$\bm{\Phi}$}, $g$, and
-    associated positive eigenvector, $\bm{z}^{*}$.
+    (i) There exists a largest positive eigenvalue of \alert{$\bm{\Phi}$}, $g$, and
+    an associated positive eigenvector, $\bm{z}^{*}$.
 
     (ii) There exists a globally stable BGP such that the knowledge capital
     growth rate of all firms is $g$, and the knowledge capital distribution
     is a scalar multiple of $\bm{z}^{*}$.
-  \end{thm*}
+  \end{theorem*}
   \begin{itemize}
     \item Proof: Perron--Frobenius Theorem
     \item ``\alert{$\bm{\Phi}$} is irreducible'' $\Longleftrightarrow$ ``All firms are
           directly or indirectly connected technologically''
   \end{itemize}
   \hyperlink{symmetric}{\beamerbutton{Symmetric Example}}
-\end{frame}
-
-\begin{frame}{Intuition Behind BGP}
-  \begin{itemize}
-    \item On the BGP, \alert{$\bm{a}_{t}$}, ${\color{uclaBlue}\bm{b}_{t}}$,
-          \alert{$\bm{z}_{t}$}, and ${\color{uclaBlue}\bm{q}_{t}}$
-          grow at the same rate
-  \end{itemize}
-  \begin{center}
-    \renewcommand{\arraystretch}{1.3}
-    \begin{tabular}{>{\raggedright\arraybackslash}p{5cm}>{\raggedright\arraybackslash}p{6cm}}
-      Technological Choice:         & $\zeta{\color{uclaBlue}a_{i,t}}+{\color{uclaBlue}b_{i,t}}={\color{uclaBlue}z_{i,t}}$ \\
-      Linear Production Technology: & ${\color{uclaBlue}q_{i,t}}={\color{uclaBlue}a_{i,t}}l_{i,t}$                         \\
-      Inelastic Labor Supply:       & $L=\sum_{i}l_{i,t}$                                                                  \\
-    \end{tabular}
-    \renewcommand{\arraystretch}{1.0}
-    \par\end{center}
-  \begin{itemize}
-    \item Linear and quadratic terms in $\color{uclaBlue}\bm{q}_{t}$ of output grow at the same rate:
-          \[
-            Y_{t}={\color{uclaBlue}\bm{q}_{t}^{T}\bm{b}_{t}}-\frac{1}{2}{\color{uclaBlue}\bm{q}_{t}^{T}}\bm{\Sigma}{\color{uclaBlue}\bm{q}_{t}}
-          \]
-  \end{itemize}
 \end{frame}
 
 \begin{frame}{Partial Equilibrium Diagram: CES on BGP despite non-CES}
@@ -425,15 +411,6 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Growth Decomposition}
-  \begin{itemize}
-    \item $d\bm{z}_{t}/dt= \bm{\Phi}\bm{z}_{t}$ where $\bm{\Phi}=\bm{\Omega}+\mu^{2}\bm{\widetilde{X}}$
-  \end{itemize}
-  \begin{equation*}
-    \frac{d\log Y_{t}}{dt} = \underbrace{\frac{\bm{z}_{t}^{T}\left(\bm{Q}\bm{\Omega}+\bm{\Omega}\bm{Q}\right)\bm{z}_{t}}{Y_{t}}}_{\text{Tech Spillover}} + \underbrace{\frac{\mu^{2}\bm{z}_{t}^{T}\left(\bm{Q}\bm{\widetilde{X}}+\bm{\widetilde{X}}^{T}\bm{Q}\right)\bm{z}_{t}}{Y_{t}}}_{\text{R\&D}}
-  \end{equation*}
-\end{frame}
-
 \section{Identification}
 
 \begin{frame}{Product Market Rivalry $\bm{\Sigma}$}
@@ -455,14 +432,15 @@
   \begin{itemize}
     \item Technological profile of firm $i$
           \begin{itemize}
-            \item The vector of the share of patents held by firm
-                  $i$ in each patent class
-            \item Baseline: group-level patent classifications ($\approx4000$)\medskip{}
+            \item The vector of the share of patents held by firm $i$ in each technology class
+            \item Baseline: group-level patent classifications ($\approx 4000$), five years window
+                  \medskip{}
           \end{itemize}
           \medskip{}
     \item \citet{Jaffe1986-yz} technological proximity measure $\tilde{\omega}_{ij}$:
           \begin{itemize}
-            \item Cosine similarity of the technological profiles b/w firm $i$ and $j$
+            \item Cosine similarity of the technological profiles between firms $i$ and $j$
+            \item Impose $\sum_{j\neq i}\tilde{\omega}_{ij} = 1$ for each $i$
           \end{itemize}
   \end{itemize}
 \end{frame}
@@ -491,47 +469,44 @@
   \end{table}
 \end{frame}
 
-\begin{frame}{Technology Spillover $\bm{\Omega}=\beta\times$Technological Proximity $\bm{\widetilde{\Omega}}$}
-  \vspace{-5mm}
+\begin{frame}{Technology Spillover $\bm{\Omega}=\beta\times$Technological Proximity $\bm{\widetilde{\Omega}}$ \hyperlink{first_stage}{\beamerbutton{First Stage}}}
   \label{regression}
-
-  \[
-    z_{i,t+1}-z_{i,t}
-    =\beta\sum_{j\neq i}\tilde{\omega}_{ij,t}z_{j,t}
-    +\text{Year FE}_{t}
-    +\epsilon_{i,t}
-  \]
   {\footnotesize
-  \begin{center}
-    \setlength{\tabcolsep}{6pt} % Adjust column spacing
-    \begin{tabular}{lccc}
-      \hline\hline
-                                & (1)                                                                   & (2)          & (3)          \\
-      \hline
-      $\sum_{j\neq i}\tilde{\omega}_{ij,t}z_{j,t}$
-                                & $\begin{array}{c}\text{0.000178}^{***}\\(\text{0.000032})\end{array}$
-                                & $\begin{array}{c}\text{0.000120}^{***}\\(\text{0.000033})\end{array}$
-                                & $\begin{array}{c}\text{0.000148}^{***}\\(\text{0.000035})\end{array}$                               \\
-
-      $\sqrt{\text{R\&D Expenditure}}$
-                                &
-                                & $\begin{array}{c}\text{0.051598}^{***}\\(\text{0.018485})\end{array}$
-                                &                                                                                                     \\
-      \hline
-      Year Fixed Effects        & $\checkmark$                                                          & $\checkmark$ & $\checkmark$ \\
-      IV                        &                                                                       &              & $\checkmark$ \\
-      IV 1st Stage F-statistics &                                                                       &              & 4176         \\
-      No.\ observations         & 21,825                                                                & 21,825       & 21,825       \\
-      \hline\hline
-    \end{tabular}
-  \end{center}
-
-  SEs clustered by years and 4-digit NAICS industries are reported in parentheses.
-    {*} $p<\text{0.1}$, {**} $p<\text{0.05}$, {***} $p<\text{0.01}$.}
+    \[
+      \log z_{i,t+1}-\log z_{i,t}
+      =\beta\sum_{j\neq i}\tilde{\omega}_{ij,t} \frac{z_{j,t}}{z_{i,t}}
+      +\text{Controls}_{i,t}
+      +\epsilon_{i,t}
+    \]
+    \begin{center}
+      \setlength{\tabcolsep}{6pt} % Adjust column spacing
+      \begin{tabular}{lccc}
+        \hline\hline
+                         & (1)                                                                   & (2)          & (3)          \\
+                         & $\log z_{i,t+1}-\log z_{i,t}$
+                         & $\log z_{i,t+1}-\log z_{i,t}$
+                         & $\log z_{i,t+1}-\log z_{i,t}$                                                                       \\
+        \hline
+        $\sum_{j\neq i}\tilde{\omega}_{ij,t} \frac{z_{j,t}}{z_{i,t}}$
+                         & $\begin{array}{c}\text{0.026}^{**}\\(\text{0.010})\end{array}$
+                         & $\begin{array}{c}\text{0.024}^{**}\\(\text{0.010})\end{array}$
+                         & $\begin{array}{c}\text{0.073}^{*}\\(\text{0.038})\end{array}$                                 \\
+        $\frac{x_{i,t}}{z_{i,t}}$
+                         &
+                         & $\begin{array}{c}\text{0.514}^{***}\\(\text{0.063})\end{array}$
+                         &                                                                                                     \\
+        \hline
+        Firm \& Year FEs & $\checkmark$                                                          & $\checkmark$ & $\checkmark$ \\
+        Controls         & $\checkmark$                                                          & $\checkmark$ & $\checkmark$ \\
+        IV               &                                                                       &              & $\checkmark$ \\
+        Observations     & 14,576                                                                & 14,576       & 14,576       \\
+        \hline\hline
+      \end{tabular}
+    \end{center}
+    SEs clustered by years and 4-digit NAICS industries are reported in parentheses. Control variables include $\log z_{i,t}$, firm fixed effects, and year fixed effects.
+      {*} $p<\text{0.1}$, {**} $p<\text{0.05}$, {***} $p<\text{0.01}$.}
   \begin{itemize}
-    \item IV: Tax price of R\&D from state-specific rules \citep{Bloom2013-pn}
-
-          \hyperlink{first_stage}{\beamerbutton{First Stage}}
+    \item IV: User cost of R\&D, driven by federal and state-specific rules variations \citep{Bloom2013-pn}
   \end{itemize}
 \end{frame}
 
@@ -549,10 +524,11 @@
       $\bm{\Sigma}$             & Product proximity                                &         & Form 10-K, \citet{Hoberg2016-jm}              \\
       $\bm{\widetilde{\Omega}}$ & Technological proximity                          &         & USPTO, Patent classification                  \\
       $\alpha$                  & Product proximity $\rightarrow$ Substitutability & 0.12    & \citet{Pellegrino2024-dn}                     \\
-      $\beta$                   & Technological proximity $\rightarrow$ Spillover  & 0.00015 & Estimate the law of motion                    \\
-      $\zeta/L$                 & Labor augmentation efficiency                    & 0.0038  & Compustat, Cost of goods sold                 \\
-      $\rho$                    & Discount rate                                    & 0.10    & $>$ risk-free rates, $<$ private R\&D returns \\
-      $\mu$                     & R\&D efficiency                                  & 0.06    & 1.6\% economic growth rate                    \\
+      $\beta$                   & Technological proximity $\rightarrow$ Spillover  & 0.024 & Estimate the law of motion                    \\
+      $\zeta/L$                 & Labor-augmentation efficiency                    & 0.004 & Compustat, Cost of goods sold                 \\
+      $\rho$                    & Discount rate                                    & 0.100    & $>$ risk-free rates, $<$ private R\&D returns \\
+      $\mu$                     & R\&D efficiency                                  & 0.054 & 2.6\% R\&D share (moment match)               \\
+      $\delta$                  & Depreciation rate                                & 0.016 & 1.5\% economic growth rate (moment match)     \\
       \bottomrule
     \end{tabular}
   \end{table}
@@ -581,7 +557,7 @@
 
 \begin{frame}{Fit b/w Model and Data: Firm-level Growth Rates}
   \begin{itemize}
-    \item Data: Average growth rate of $z_{it}$ b/w 2010 and 2019
+    \item Data: Average growth rate of $z_{it}$ b/w 2010 and 2017
   \end{itemize}
   \medskip{}
   \begin{center}
@@ -601,7 +577,6 @@
       \textbf{Total Output}      & (competitive equilibrium = 100)        \\[1ex]
       \textbf{R\&D Share}        & Total R\&D / Total output (\%)         \\[1ex]
       \textbf{Growth Rate}       & (\%)                                   \\[1ex]
-      \textbf{R\&D Contribution} & Growth due to R\&D / Growth rate (\%)  \\[1ex]
       \textbf{Social Welfare}    & (competitive equilibrium = 100)        \\[1ex]
       \textbf{Firm Value Share}  & Total firm value / Social welfare (\%) \\
       \bottomrule
@@ -611,38 +586,46 @@
 
 \begin{frame}{Counterfactuals: R\&D (Given Static Cournot Competition)}
   \begin{center}
-    \begin{tabular}{lcccccc}
+    \begin{tabular}{lccccc}
       \toprule
-       & \shortstack{\textbf{Total}                    \\\textbf{Output}} & \shortstack{\textbf{R\&D} \\\textbf{Share}} & \shortstack{\textbf{Growth}\\\textbf{Rate}} & \shortstack{\textbf{R\&D}\\\textbf{Contribution}} & \shortstack{\textbf{Social}\\\textbf{Welfare}} & \shortstack{\textbf{Firm Value}\\\textbf{Share}} \\
+       & \shortstack{\textbf{Total}                    \\\textbf{Output}} & \shortstack{\textbf{R\&D} \\\textbf{Share}} & \shortstack{\textbf{Growth}\\\textbf{Rate}} & \shortstack{\textbf{Social}\\\textbf{Welfare}} & \shortstack{\textbf{Firm Value}\\\textbf{Share}} \\
       \midrule
-      \onslide<1->{\shortstack[l]{\textbf{Competitive} \\\textbf{Equilibrium}} & 100.00          & 3.61\%                    & 1.61\% & 52.85\% & 100.00 & 31.07\%}  \\
+      \onslide<1->{\shortstack[l]{\textbf{Competitive} \\\textbf{Equilibrium}} & 100.00          & 2.59\%                    & 1.51\% & 100.00 & 26.4\%}  \\
       \midrule
-      \onslide<2->{\shortstack[l]{\textbf{Social}      \\\textbf{Optimum}}  & 100.00          & 8.02\%                    & 2.03\% & 62.55\% & 101.29 & 28.69\%}  \\
+      \onslide<2->{\shortstack[l]{\textbf{Monopoly}    \\\textbf{(R\&D)}}  & 100.00          & 1.34\%                    & 1.36\% & 98.89  & 27.39\%}  \\
       \midrule
-      \onslide<3->{\shortstack[l]{\textbf{Monopoly}    \\~\\~\\~}  & 100.00          & 2.18\%                    & 1.40\% & 45.74\% & 98.92  & 32.13\%}  \\
+      \onslide<3->{\shortstack[l]{\textbf{Planner}      \\\textbf{(R\&D)}}  & 100.00          & 6.27\%                    & 1.80\% & 104.36 & 24.09\%}  \\
       \bottomrule
     \end{tabular}
   \end{center}
   \begin{itemize}
-    \onslide<2->{\item Social optimum: Internalize the impact of innovation on consumer surplus $\Longrightarrow$ R\&D $\uparrow$}
-          \onslide<3->{\item Monopoly: Internalize business stealing $>$ technological spillover $\Longrightarrow$ R\&D $\downarrow$}
+    \onslide<2->{\item Monopoly: Internalize business stealing $>$ technological spillover $\Longrightarrow$ R\&D $\downarrow$}
+    \onslide<3->{\item Social optimum: Internalize the impact of innovation on consumer surplus $\Longrightarrow$ R\&D $\uparrow$}
   \end{itemize}
 \end{frame}
 
 \begin{frame}{Counterfactuals: Both R\&D and Product Market Competition}
   \begin{center}
-    \begin{tabular}{lcccccc}
+    \begin{tabular}{lccccc}
       \toprule
-       & \shortstack{\textbf{Total}       \\\textbf{Output}} & \shortstack{\textbf{R\&D} \\\textbf{Share}} & \shortstack{\textbf{Growth}\\\textbf{Rate}} & \shortstack{\textbf{R\&D}\\\textbf{Contribution}} & \shortstack{\textbf{Social}\\\textbf{Welfare}} & \shortstack{\textbf{Firm Value}\\\textbf{Share}} \\
+       & \shortstack{\textbf{Total}       \\\textbf{Output}} & \shortstack{\textbf{R\&D} \\\textbf{Share}} & \shortstack{\textbf{Growth}\\\textbf{Rate}} & \shortstack{\textbf{Social}\\\textbf{Welfare}} & \shortstack{\textbf{Firm Value}\\\textbf{Share}} \\
       \midrule
-      \shortstack[l]{\textbf{Competitive} \\\textbf{Equilibrium}} & 100.00          & 3.61\%                    & 1.61\% & 52.85\% & 100.00 & 31.07\%  \\
+      \shortstack[l]{\textbf{Competitive} \\\textbf{Equilibrium}} & 100.00          & 2.59\%                    & 1.51\% & 100.00 & 26.54\%  \\
       \midrule
-      \shortstack[l]{\textbf{Social}      \\\textbf{Optimum}} & 109.68          & 13.57\%                   & 2.73\% & 71.71\% & 117.79 & $-$25.59\% \\
+      \shortstack[l]{\textbf{Monopoly}    \\\textbf{(R\&D)}}  & 100.00          & 1.34\%                    & 1.36\% & 98.89  & 27.39\%  \\
       \midrule
-      \shortstack[l]{\textbf{Monopoly}    \\~\\~\\~} & 96.17           & 2.54\%                    & 1.45\% & 48.50\% & 95.46  & 46.86\%  \\
+      \shortstack[l]{\textbf{Planner}      \\\textbf{(R\&D)}}  & 100.00          & 6.27\%                    & 1.80\% & 104.36 & 24.09\%  \\
+      \midrule
+      \shortstack[l]{\textbf{Monopoly}    \\ \textbf{(Both)}} & 96.33           & 2.02\%                    & 1.40\% & 95.67  & 43.09\%  \\
+      \midrule
+      \shortstack[l]{\textbf{Planner}      \\ \textbf{(Both)}} & 109.29          & 4.76\%                    & 1.83\% & 114.54 & $-$5.55\% \\
       \bottomrule
     \end{tabular}
   \end{center}
+  \begin{itemize}
+    \item R\&D in Monopoly (Both) $>$ Monopoly (R\&D): Less competition  $\Longrightarrow$ private R\&D return $\uparrow$
+    \item  R\&D in Planner (Both) $>$ Planner (R\&D): Efficient production  $\Longrightarrow$ social R\&D return $\uparrow$
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{R\&D Subsidy}
@@ -657,13 +640,39 @@
       }
     \end{figure}
     \par\end{center}
-  \begin{itemize}
-    \item Optimal subsidy rate: 32\%
-          \begin{itemize}
-            \item Growth rate increases by 0.46 p.p
-            \item Welfare increases by 1.17\%
-          \end{itemize}
-  \end{itemize}
+    \begin{itemize}
+      \item Optimal rate is $s=34\%$, which increases $g$ by 0.29 pp and CE welfare by 0.53\%
+      \item c.f. Welfare gains from optimal R\&D allocation: 6.0\% 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Which Firms' R\&D Should be Subsidized?}
+
+  \begin{center}
+    \setlength{\tabcolsep}{6pt}
+    \begin{tabular}{lcc}
+      \hline\hline
+                       & Private R\&D $x$ & Social / Private value of R\&D \\
+      \hline
+      Initial knowledge capital $z$              & $\begin{array}{c}\text{0.104}^{***}\\(\text{0.000670})\end{array}$ & $\begin{array}{c}\text{0.000276}\\(\text{0.000179})\end{array}$ \\
+      Product market centrality & $\begin{array}{c}\text{-15.5}^{***}\\(\text{0.230})\end{array}$ & $\begin{array}{c}\textcolor{uclaBlue}{\text{-0.523}^{***}}\\(\text{0.0615})\end{array}$ \\
+      Tech spillover centrality & $\begin{array}{c}\text{2.46}^{***}\\(\text{0.359})\end{array}$ & $\begin{array}{c}\textcolor{uclaBlue}{\text{1.70}^{***}}\\(\text{0.0959})\end{array}$ \\
+      Intercept        & $\begin{array}{c}\text{-22.0}^{***}\\(\text{0.219})\end{array}$ & $\begin{array}{c}\text{0.726}^{***}\\(\text{0.0585})\end{array}$ \\
+      \hline
+      Observations     & \multicolumn{1}{c}{757} & \multicolumn{1}{c}{757} \\
+      $R^2$            & \multicolumn{1}{c}{0.978} & \multicolumn{1}{c}{0.366} \\
+      \hline\hline
+    \end{tabular}
+    \medskip{}
+    \begin{itemize}
+      \item R\&D subsidies should target firms with 
+      \begin{itemize}
+        \item low product-market centrality
+        \item high technology-spillover centrality
+      \end{itemize}
+    \end{itemize}
+  \end{center}
+
 \end{frame}
 
 \section{Conclusion}
@@ -679,11 +688,6 @@
           \begin{itemize}
             \item Can solve with thousands of oligopolistic firms
             \item Utilize recently available micro data and computational power
-          \end{itemize}
-          \medskip{}
-    \item Potential applications:
-          \begin{itemize}
-            \item Trade liberalization (war) and international technology spillovers
           \end{itemize}
   \end{itemize}
 \end{frame}
@@ -815,8 +819,6 @@
 
   \label{X}
   \begin{itemize}
-    \item  Stochastic law of motion:
-          \[d\bm{z}_{t}=\left(\bm{\Omega}\bm{z}_{t}+\mathrm{diag}\left(\mu\right)\bm{x}_{t}\right)dt+\mathrm{diag}\left(\gamma\right)\bm{z}_{t} d\bm{W}_{t}\]
     \item Output: $Y_{t}=\bm{q}_{t}^{T}\bm{Q}\bm{q}_{t}$ where
           \[
             \bm{Q}=\frac{\zeta}{L}\bm{1}_{n\times n}+\bm{I}+\frac{1}{2}\bm{\Sigma}
@@ -881,6 +883,29 @@
   \hyperlink{bgp}{\beamerbutton{Back}}
 \end{frame}
 
+\begin{frame}{Intuition Behind BGP}
+  \begin{itemize}
+    \item On the BGP, \alert{$\bm{a}_{t}$}, ${\color{uclaBlue}\bm{b}_{t}}$,
+          \alert{$\bm{z}_{t}$}, and ${\color{uclaBlue}\bm{q}_{t}}$
+          grow at the same rate
+  \end{itemize}
+  \begin{center}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{>{\raggedright\arraybackslash}p{5cm}>{\raggedright\arraybackslash}p{6cm}}
+      Technological Choice:         & $\zeta{\color{uclaBlue}a_{i,t}}+{\color{uclaBlue}b_{i,t}}={\color{uclaBlue}z_{i,t}}$ \\
+      Linear Production Technology: & ${\color{uclaBlue}q_{i,t}}={\color{uclaBlue}a_{i,t}}l_{i,t}$                         \\
+      Inelastic Labor Supply:       & $L=\sum_{i}l_{i,t}$                                                                  \\
+    \end{tabular}
+    \renewcommand{\arraystretch}{1.0}
+    \par\end{center}
+  \begin{itemize}
+    \item Linear and quadratic terms in $\color{uclaBlue}\bm{q}_{t}$ of output grow at the same rate:
+          \[
+            Y_{t}={\color{uclaBlue}\bm{q}_{t}^{T}\bm{b}_{t}}-\frac{1}{2}{\color{uclaBlue}\bm{q}_{t}^{T}}\bm{\Sigma}{\color{uclaBlue}\bm{q}_{t}}
+          \]
+  \end{itemize}
+\end{frame}
+
 \begin{frame}{Social Optimum }
 
   \label{optimal}
@@ -903,28 +928,17 @@
   \hyperlink{aggregation}{\beamerbutton{Back}}
 \end{frame}
 
-\begin{frame}{Stochastic Growth}
-
-  \label{Y_process}
+\begin{frame}{Growth Decomposition}
   \begin{itemize}
-    \item Applying Itô's lemma, {\footnotesize
-          \[
-            d\log Y_{t}=\left[\frac{\bm{z}_{t}^{T}\left(\bm{Q}\bm{\Phi}+\bm{\Phi}^{T}\bm{Q}\right)\bm{z}_{t}}{Y_{t}}+\gamma^{2}\left\{ \frac{\sum_{i}z_{i,t}^{2}\bm{Q}_{ii}}{Y_{t}}-\frac{2\bm{z}_{t}^{T}\bm{Q}\mathrm{diag}\left(\bm{z}_{t}^{2}\right)\bm{Q}\bm{z}_{t}}{Y_{t}^{2}}\right\} \right]dt+\frac{2\gamma\bm{z}_{t}^{T}\bm{Q}\mathrm{diag}\left(\bm{z}_{t}\right)}{Y_{t}}dW_{t}
-          \]
-          }where $Y_{t}=\bm{z}_{t}^{T}\bm{Q}\bm{z}_{t}$ and $\bm{\Phi}=\bm{\Omega}+\mu^{2}\bm{\widetilde{X}}$
+    \item Aggregate output: $Y_{t}=\bm{z}_{t}^{T}\bm{Q}\bm{z}_{t}$
+    \item $d\bm{z}_{t}/dt= \bm{\Phi}\bm{z}_{t}$ where $\bm{\Phi}=\bm{\Omega}+\mu^{2}\bm{\widetilde{X}} - \delta\bm{I}$
   \end{itemize}
-  \begin{center}
-    \begin{tabular}{l l}
-      \toprule
-      Tech Spillover    & $\displaystyle \frac{\bm{z}_{t}^{T}\left(\bm{Q}\bm{\Omega}+\bm{\Omega}^{T}\bm{Q}\right)\bm{z}_{t}}{Y_{t}}$                                                                                \\
-      R\&D Contribution & $\displaystyle \frac{\mu^{2}\bm{z}_{t}^{T}\left(\bm{Q}\bm{\widetilde{X}}+\bm{\widetilde{X}}^{T}\bm{Q}\right)\bm{z}_{t}}{Y_{t}}$                                                           \\
-      Itô Correction    & $\displaystyle \gamma^{2}\left\{ \frac{\sum_{i}z_{i,t}^{2}\bm{Q}_{ii}}{Y_{t}} - \frac{2\bm{z}_{t}^{T}\bm{Q}\mathrm{diag}\left(\bm{z}_{t}^{2}\right)\bm{Q}\bm{z}_{t}}{Y_{t}^{2}} \right\}$ \\
-      \midrule
-      Total             & $\bm{E}\left[d\log Y_{t}\right]$                                                                                                                                                          \\
-      \bottomrule
-    \end{tabular}
-  \end{center}
+  \begin{equation*}
+    \frac{d\log Y_{t}}{dt} = \underbrace{\frac{\bm{z}_{t}^{T}\left(\bm{Q}\bm{\Omega}+\bm{\Omega}\bm{Q}\right)\bm{z}_{t}}{Y_{t}}}_{\text{Tech Spillover}} + \underbrace{\frac{\mu^{2}\bm{z}_{t}^{T}\left(\bm{Q}\bm{\widetilde{X}}+\bm{\widetilde{X}}^{T}\bm{Q}\right)\bm{z}_{t}}{Y_{t}}}_{\text{R\&D}} - \underbrace{2\delta}_{\text{Depreciation}}
+  \end{equation*}
 \end{frame}
+
+
 %
 \begin{frame}{Trend of Number of Sample Firms}
   \begin{center}
@@ -995,33 +1009,63 @@
   \hyperlink{product_identification}{\beamerbutton{Back}}
 \end{frame}
 
-\begin{frame}{First Stage}
+\begin{frame}{First Stage \hyperlink{regression}{\beamerbutton{Back}}}
+  \label{first_stage}
   \begin{center}
-    \label{first_stage}
-    \begin{tabular}{cc}
+    \begin{tabular}{lc}
       \hline
-      \hline              & (1)\tabularnewline
-      Dependent Variable: & $z_{i,t}$\tabularnewline
+      \hline                          & R\&D \tabularnewline
+                                      & (1)\tabularnewline
       \hline
-      User cost of R\&D   & $\begin{array}{c}
-                                 -48.15^{***} \\
-                                 (4.25)
-                               \end{array}$\tabularnewline
+      \begin{tabular}[t]{@{}l@{}}
+        State tax credit component \\
+        of R\&D user cost
+      \end{tabular}   & $\begin{array}{c}
+                             -1.16^{***} \\
+                             (0.29)
+                           \end{array}$\tabularnewline
+      \begin{tabular}[t]{@{}l@{}}
+        Federal tax credit component \\
+        of R\&D user cost
+      \end{tabular} & $\begin{array}{c}
+                           -34.29^{***} \\
+                           (3.64)
+                         \end{array}$\tabularnewline
       \hline
-      Year Fixed Effects  & $\checkmark$\tabularnewline
-      No. observations    & $20,665$\tabularnewline
+      Firm fixed effects              & $\checkmark$\tabularnewline
+      Year fixed effects              & $\checkmark$\tabularnewline
+      No. of observations             & 16197\tabularnewline
       \hline
-    \end{tabular}\medskip{}
-    \par\end{center}
-
+    \end{tabular}
+    \medskip{}
+  \end{center}
   {\footnotesize
   SEs clustered by years and 4-digit NAICS industries are reported in parentheses.
   }
   \medskip{}
   \begin{itemize}
-    \item IV: User cost of R\&D, driven by state-level tax variations \citep{Wilson2009-ri,Bloom2013-pn}
+    \item IV: User cost of R\&D, driven by federal and state-specific rules variations \\ \citep{Wilson2009-ri,Bloom2013-pn}
   \end{itemize}
-  \hyperlink{regression}{\beamerbutton{Back}}
+\end{frame}
+
+\begin{frame}{Negative R\&D and Output}
+  \begin{itemize}
+    \item Issue with the model: negative output and R\&D
+          \begin{itemize}
+            \item Inada condition is not satisfied
+            \item Non-negativity constraint makes model intractable
+          \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Negative R\&D and Quantity}
+  \begin{itemize}
+  \item Firms with negative values are negligible along the transition path
+  \item The weight on consumption 100 years and beyond is 0.00454\% ($\rho=0.1$)
+  \end{itemize}
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{figures/transition_path_analysis.png}
+  \end{center}
 \end{frame}
 
 \bibliographystyle{econ-aea}
